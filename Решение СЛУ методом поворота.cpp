@@ -42,7 +42,7 @@ float chek(long double x) {
 		return 0;
 	else return x;
 }
-int chek_b(double** A, double* b, int N) { //ïðîâåðêà ñòîëáöà ñâîáîäíûõ êîýô. íà 0
+int chek_b(double** A, double* b, int N) { //ÐŸÑ€Ð¾Ð²ÐµÑ€ÐºÐ° ÑÑ‚Ð¾Ð»Ð±Ñ†Ð° ÑÐ²Ð¾Ð±Ð¾Ð´Ð½Ñ‹Ñ… ÐºÐ¾ÑÑ„Ñ„Ð¸Ñ†Ð¸ÐµÐ½Ñ‚Ð¾Ð² Ð½Ð° 0
 	int i;
 	int count0 = 0;
 
@@ -50,10 +50,10 @@ int chek_b(double** A, double* b, int N) { //ïðîâåðêà ñòîëáöà ñâîáîäíûõ êîýô. íà
 		b[i] = float(b[i]);
 		A[i][i] = float(A[i][i]);
 		if (chek(b[i]) == 0 && chek(A[i][i]) == 0) count0++;
-		if (chek(b[i]) != 0 && chek(A[i][i]) == 0) return -1;// ó êàêîãî-òî óðàâíåíèÿ íåò ðåøåíèÿ
+		if (chek(b[i]) != 0 && chek(A[i][i]) == 0) return -1; //Ð£ ÐºÐ°ÐºÐ¾Ð³Ð¾-Ñ‚Ð¾ ÑƒÑ€Ð°Ð²Ð½ÐµÐ½Ð¸Ñ Ð½ÐµÑ‚ Ñ€ÐµÑˆÐµÐ½Ð¸Ñ
 
 	}
-	if (count0 != 0) return 0;// åñòü óðàíâåíèå âèäà 0=0,  â ñëó óðàâíåíèé íà 1 ìåíüøå, ÷åì íåèçâåñòíûõ, åñòü áåñê. ìí-âî ðåøåíèé
+	if (count0 != 0) return 0;// Ð•ÑÑ‚ÑŒ ÑƒÑ€Ð°Ð²Ð½ÐµÐ½Ð¸Ðµ Ð²Ð¸Ð´Ð° 0=0, Ñ€ÐµÑˆÐµÐ½Ð¸Ð¹ ÑÐ»Ñƒ Ð±ÐµÑÐºÐ¾Ð½ÐµÑ‡Ð½Ð¾ Ð¼Ð½Ð¾Ð³Ð¾
 	return 1;
 }
 
@@ -65,14 +65,14 @@ double Det(double** A, int N) {
 	return det;
 }
 
-void GetX(double** M, int N, double* b,double* x) { // Îáðàòíûé õîä
+void GetX(double** M, int N, double* b,double* x) { // ÐžÐ±Ñ€Ð°Ñ‚Ð½Ñ‹Ð¹ Ñ…Ð¾Ð´
 	x[N - 1] = b[N - 1] / M[N - 1][N - 1];
 	for (int i = N - 2; i >= 0; i--)
 	{
 		double rem = 0;
 		for (int j = i + 1; j < N; j++)
 		{
-			rem = rem + M[i][j] * x[j]; //âû÷èñëÿåì, ÷òî íóæíî îòíÿòü îò ñâîáîäíîãî êîýôôèöèåíòà
+			rem = rem + M[i][j] * x[j]; //Ð§Ñ‚Ð¾ Ð¾Ñ‚Ð½Ð¸Ð¼Ð°ÐµÐ¼ Ð¾Ñ‚ ÑÐ²Ð¾Ð±Ð¾Ð´Ð½Ð¾Ð³Ð¾ ÐºÐ¾ÑÑ„.
 		}
 		x[i] = (b[i] - rem) / M[i][i];
 	}
@@ -91,17 +91,14 @@ void Get_Inverse(double** M, double** inv, int N) {
 				M[i][j] -= M[k][j] * coef;
 				inv[i][j] -= inv[k][j] * coef;
 			}
-			
 		}
-		
-
 	}
 	for(k=0; k<N; k++)
 		for (j = 0; j < N; j++) {
 			inv[k][j] /= M[k][k];
 		}
 
-	printf("\n\nÎáðàòíàÿ ìàòðèöà:\n");
+	printf("\n\nÃŽÃ¡Ã°Ã Ã²Ã­Ã Ã¿ Ã¬Ã Ã²Ã°Ã¨Ã¶Ã :\n");
 	for (j = 0; j < N; j++) {
 		for (i = 0; i < N; i++)
 			printf("%lf ", inv[j][i]);
@@ -150,13 +147,13 @@ int main()
 	printf("\ndet=%Lf\n", det = chek(Det(M, N)));
 	
 
-	if (chek(det) == 0 && zero_b == -1) printf("Ïóñòîå ìíîæåñòâî ðåøåíèé. Îáðàòíîé ìàòðèöû íå ñóùåñòâóåò.");
+	if (chek(det) == 0 && zero_b == -1) printf("ÐŸÑƒÑÑ‚Ð¾Ðµ Ð¼Ð½Ð¾Ð¶ÐµÑÑ‚Ð²Ð¾ Ñ€ÐµÑˆÐµÐ½Ð¸Ð¹. ÐžÐ±Ñ€Ð°Ñ‚Ð½Ð¾Ð¹ Ð¼Ð°Ñ‚Ñ€Ð¸Ñ†Ñ‹ Ð½Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚.");
 	else if (chek(det) == 0 && zero_b == 0)
-		printf("Áåñêîíå÷íîå ìíîæåñòâî ðåøåíèé. Îáðàòíîé ìàòðèöû íå ñóùåñòâóåò. ");
+		printf("Ð‘ÐµÑÐºÐ¾Ð½ÐµÑ‡Ð½Ð¾Ðµ Ð¼Ð½Ð¾Ð¶ÐµÑÑ‚Ð²Ð¾ Ñ€ÐµÑˆÐµÐ½Ð¸Ð¹. ÐžÐ±Ñ€Ð°Ñ‚Ð½Ð¾Ð¹ Ð¼Ð°Ñ‚Ñ€Ð¸Ñ†Ñ‹ Ð½Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚.");
 	else {
 		X = (double*)calloc(N, sizeof(double));
 		GetX(M, N, b, X);
-		printf("\nÐåøåíèå:(");
+		printf("\nÐ ÐµÑˆÐµÐ½Ð¸Ðµ:(");
 		for (i = 0; i < N - 1; i++)
 			printf("%Lf, ", X[i]);
 		printf("%Lf)", X[N - 1]);
