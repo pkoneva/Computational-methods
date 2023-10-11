@@ -6,8 +6,8 @@ const double PI = 3.1415926535897932384626433832795;
 ifstream fin;
 ofstream fout;
 class Matrix {
-	int n;//высота
-	int m;//длина
+	int n;//РІС‹СЃРѕС‚Р°
+	int m;//РґР»РёРЅР°
 	double** matr;
 	double* vect;
 public:
@@ -18,7 +18,7 @@ public:
 		this->vect = 0;
 	}
 	Matrix(int N) {
-		if (N <= 0) throw "Неверный размер";
+		if (N <= 0) throw "РќРµРІРµСЂРЅС‹Р№ СЂР°Р·РјРµСЂ";
 		this->n = N;
 		this->m = N;
 		this->matr = new double* [N];
@@ -27,8 +27,8 @@ public:
 			this->matr[i] = new double[N];
 	}
 	Matrix(int N, int M) {
-		if (N <= 0) throw "Неверный размер";
-		if (M <= 0) throw "Неверный размер";
+		if (N <= 0) throw "РќРµРІРµСЂРЅС‹Р№ СЂР°Р·РјРµСЂ";
+		if (M <= 0) throw "РќРµРІРµСЂРЅС‹Р№ СЂР°Р·РјРµСЂ";
 		this->n = N;
 		this->m = M;
 		if (M != 1) {
@@ -86,7 +86,7 @@ public:
 				return res;
 			}
 		}
-		else throw "Неверный размер";
+		else throw "РќРµРІРµСЂРЅС‹Р№ СЂР°Р·РјРµСЂ";
 	}
 	Matrix operator-(const Matrix& that) const {
 		if (this->n == that.n && this->m == that.m) {
@@ -105,7 +105,7 @@ public:
 				return res;
 			}
 		}
-		else throw "Неверный размер";
+		else throw "РќРµРІРµСЂРЅС‹Р№ СЂР°Р·РјРµСЂ";
 	}
 	Matrix operator*(const Matrix& that) const {
 		if (this->m == that.n) {
@@ -143,7 +143,7 @@ public:
 			}
 			return res;
 		}
-		else throw "Неверный размер";
+		else throw "РќРµРІРµСЂРЅС‹Р№ СЂР°Р·РјРµСЂ";
 
 	}
 	bool operator==(const Matrix& that) const {
@@ -191,12 +191,12 @@ public:
 
 	}
 	void PutElem(int i, int j, double E) {
-		if (i > this->n || j > this->m)throw "Неверный размер";
+		if (i > this->n || j > this->m)throw "РќРµРІРµСЂРЅС‹Р№ СЂР°Р·РјРµСЂ";
 		if (this->m == 1) this->vect[i] = E;
 		else this->matr[i][j] = E;
 	}
 	double GetElem(int i, int j) {
-		if (i > this->n || j > this->m)throw "Неверный размер";
+		if (i > this->n || j > this->m)throw "РќРµРІРµСЂРЅС‹Р№ СЂР°Р·РјРµСЂ";
 		return matr[i][j];
 	}
 	void SetElem() {
@@ -211,7 +211,7 @@ public:
 		}
 	}
 	void Transpose() {
-		if (this->n != this->m) throw "Неверный размер";
+		if (this->n != this->m) throw "РќРµРІРµСЂРЅС‹Р№ СЂР°Р·РјРµСЂ";
 		double rem;
 		for (int i = 0; i < this->n; i++) {
 			for (int j = i + 1; j < this->n; j++) {
@@ -236,7 +236,7 @@ public:
 					Y.matr[0][i] = vect[i];
 			}
 		}
-		else throw "Неверный размер";
+		else throw "РќРµРІРµСЂРЅС‹Р№ СЂР°Р·РјРµСЂ";
 	}
 	void PrintMatr() {
 		if (this->m != 1) {
@@ -282,7 +282,7 @@ public:
 		return sum;
 	}
 	double Scal_proizv(const Matrix& y) {
-		if (n != y.n || m != 1 || y.m != 1) throw "Неверные значения";
+		if (n != y.n || m != 1 || y.m != 1) throw "РќРµРІРµСЂРЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ";
 		double res = 0;
 		for (int i = 0; i < n; i++)
 			res += vect[i] * y.vect[i];
@@ -290,7 +290,7 @@ public:
 
 	}
 	void Normalize_vekt() {
-		if (m != 1) throw "Неверные значения";
+		if (m != 1) throw "РќРµРІРµСЂРЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ";
 		double norma = Norma_Vect_2();
 		if (norma != 0) {
 			for (int i = 0; i < n; i++)
@@ -368,9 +368,9 @@ public:
 			X = Xnext;
 		} while (fabs(lim_next - lim_prev) > e);
 		X.Normalize_vekt();
-		fout << "Собственный вектор для " << i << "-ого собственного числа:" << endl;
+		fout << "РЎРѕР±СЃС‚РІРµРЅРЅС‹Р№ РІРµРєС‚РѕСЂ РґР»СЏ" << i << "-РѕРіРѕ СЃРѕР±СЃС‚РІРµРЅРЅРѕРіРѕ С‡РёСЃР»Р°:" << endl;
 		Xnext.PrintMatr();
-		fout << endl << "Cобственное число " << i << ":" << lim_next << endl;
+		fout << endl << "РЎРѕР±СЃС‚РІРµРЅРЅРѕРµ С‡РёСЃР»Рѕ " << i << ":" << lim_next << endl;
 		i--;
 		return lim_next;
 	}
