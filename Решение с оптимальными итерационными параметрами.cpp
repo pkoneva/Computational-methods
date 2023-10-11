@@ -6,8 +6,8 @@ const double PI = 3.1415926535897932384626433832795;
 ifstream fin;
 ofstream fout;
 class Matrix {
-	int n;//‚˚ÒÓÚ‡
-	int m;//‰ÎËÌ‡
+	int n;//–≤—ã—Å–æ—Ç–∞
+	int m;//–¥–ª–∏–Ω–∞
 	double** matr;
 	double* vect;
 public:
@@ -18,7 +18,7 @@ public:
 		this->vect = 0;
 	}
 	Matrix(int N) {
-		if (N <= 0) throw "ÕÂ‚ÂÌ˚È ‡ÁÏÂ";
+		if (N <= 0) throw "–ù–µ–≤–µ—Ä–Ω—ã–π —Ä–∞–∑–º–µ—Ä";
 		this->n = N;
 		this->m = N;
 		this->matr = new double* [N];
@@ -27,10 +27,11 @@ public:
 			this->matr[i] = new double[N];
 	}
 	Matrix(int N, int M) {
-		if (N <= 0) throw "ÕÂ‚ÂÌ˚È ‡ÁÏÂ";
-		if (M <= 0) throw "ÕÂ‚ÂÌ˚È ‡ÁÏÂ";
+		if (N <= 0) throw "–ù–µ–≤–µ—Ä–Ω—ã–π —Ä–∞–∑–º–µ—Ä";
+		if (M <= 0) throw "–ù–µ–≤–µ—Ä–Ω—ã–π —Ä–∞–∑–º–µ—Ä";
 		this->n = N;
-		this->m = M; if (M != 1) {
+		this->m = M;
+		if (M != 1) {
 			this->matr = new double* [N];
 			this->vect = 0;
 			for (int i = 0; i < M; i++)
@@ -42,8 +43,9 @@ public:
 		}
 	}
 	~Matrix() {
-		delete[] this->matr;
-		delete[] this->vect;
+		if (n == 1) return;
+		if(m!=1) delete[] this->matr;
+		if(m==1) delete[] this->vect;
 	}
 	Matrix(const Matrix& that) {
 		this->n = that.n;
@@ -84,7 +86,7 @@ public:
 				return res;
 			}
 		}
-		else throw "ÕÂ‚ÂÌ˚È ‡ÁÏÂ";
+		else throw "–ù–µ–≤–µ—Ä–Ω—ã–π —Ä–∞–∑–º–µ—Ä";
 	}
 	Matrix operator-(const Matrix& that) const {
 		if (this->n == that.n && this->m == that.m) {
@@ -103,13 +105,13 @@ public:
 				return res;
 			}
 		}
-		else throw "ÕÂ‚ÂÌ˚È ‡ÁÏÂ";
+		else throw "–ù–µ–≤–µ—Ä–Ω—ã–π —Ä–∞–∑–º–µ—Ä";
 	}
 	Matrix operator*(const Matrix& that) const {
 		if (this->m == that.n) {
 			Matrix res(this->n, that.m);
 			double sum = 0;
-			if (that.m != 1) {
+			if (that.m != 1 && m!=1) {
 				for (int i = 0; i < this->n; i++) {
 					for (int j = 0; j < that.m; j++) {
 						for (int k = 0; k < this->m; k++)
@@ -119,7 +121,7 @@ public:
 					}
 				}
 			}
-			else {
+			else if (that.m == 1 && m!=1){
 				for (int j = 0; j < that.n; j++) {
 					for (int k = 0; k < this->m; k++)
 						sum += this->matr[j][k] * that.vect[k];
@@ -127,9 +129,21 @@ public:
 					sum = 0;
 				}
 			}
+			else {
+				for (int j = 0; j < n; j++) {
+					
+					for (int k = 0; k < that.m; k++) {
+						sum += that.matr[0][k] * vect[j];
+						res.matr[j][k] = sum;
+						
+						sum = 0;
+					}
+					
+				}
+			}
 			return res;
 		}
-		else throw "ÕÂ‚ÂÌ˚È ‡ÁÏÂ";
+		else throw "–ù–µ–≤–µ—Ä–Ω—ã–π —Ä–∞–∑–º–µ—Ä";
 
 	}
 	bool operator==(const Matrix& that) const {
@@ -177,9 +191,13 @@ public:
 
 	}
 	void PutElem(int i, int j, double E) {
-		if (i > this->n || j > this->m)throw "ÕÂ‚ÂÌ˚È ‡ÁÏÂ";
+		if (i > this->n || j > this->m)throw "–ù–µ–≤–µ—Ä–Ω—ã–π —Ä–∞–∑–º–µ—Ä";
 		if (this->m == 1) this->vect[i] = E;
 		else this->matr[i][j] = E;
+	}
+	double GetElem(int i, int j) {
+		if (i > this->n || j > this->m)throw "–ù–µ–≤–µ—Ä–Ω—ã–π —Ä–∞–∑–º–µ—Ä";
+		return matr[i][j];
 	}
 	void SetElem() {
 		if (this->m != 1) {
@@ -193,7 +211,7 @@ public:
 		}
 	}
 	void Transpose() {
-		if (this->n != this->m) throw "ÕÂ‚ÂÌ˚È ‡ÁÏÂ";
+		if (this->n != this->m) throw "–ù–µ–≤–µ—Ä–Ω—ã–π —Ä–∞–∑–º–µ—Ä";
 		double rem;
 		for (int i = 0; i < this->n; i++) {
 			for (int j = i + 1; j < this->n; j++) {
@@ -204,6 +222,21 @@ public:
 			}
 		}
 
+	}
+	void Transpose_n_m(Matrix & Y) {
+		if (m != 1) {
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < m; j++) {
+					Y.matr[j][i] = matr[i][j];
+				}
+			}
+		}
+		if (m == 1) {
+			for (int i = 0; i < n; i++) {
+					Y.matr[0][i] = vect[i];
+			}
+		}
+		else throw "–ù–µ–≤–µ—Ä–Ω—ã–π —Ä–∞–∑–º–µ—Ä";
 	}
 	void PrintMatr() {
 		if (this->m != 1) {
@@ -240,9 +273,109 @@ public:
 		}
 		return sum;
 	}
+	double Norma_Vect_2() {
+		double sum = 0;
+		for (int i = 0; i < this->n; i++) {
+			sum += this->vect[i]* this->vect[i];
+		}
+		sum = sqrt(sum);
+		return sum;
+	}
+	double Scal_proizv(const Matrix& y) {
+		if (n != y.n || m != 1 || y.m != 1) throw "–ù–µ–≤–µ—Ä–Ω—ã–µ –∑–Ω–∞—á–µ–Ω–∏—è";
+		double res = 0;
+		for (int i = 0; i < n; i++)
+			res += vect[i] * y.vect[i];
+		return res;
+
+	}
+	void Normalize_vekt() {
+		if (m != 1) throw "–ù–µ–≤–µ—Ä–Ω—ã–µ –∑–Ω–∞—á–µ–Ω–∏—è";
+		double norma = Norma_Vect_2();
+		if (norma != 0) {
+			for (int i = 0; i < n; i++)
+				vect[i] /= norma;
+		}
+		return;
+	}
+	Matrix& StraightWay_Metod_Vracsheniy(Matrix& inv) {
+		long double cos, sin, znam, rem1, rem2;
+		int i, j, k;
+		for (i = 0; i < n; i++) {
+			for (j = i + 1; j < n; j++) {
+				znam = sqrt(matr[i][i] * matr[i][i] + matr[j][i] * matr[j][i]);
+				cos = matr[i][i] / znam;
+				sin = matr[j][i] / znam;
+
+				for (k = i; k < n; k++) {
+					rem1 = matr[i][k];
+					rem2 = matr[j][k];
+					matr[i][k] = cos * rem1 + sin * rem2;
+					matr[j][k] = -sin * rem1 + cos * rem2;
+
+
+				}
+				for (k = 0; k < n; k++) {
+					rem1 = inv.matr[i][k];
+					rem2 = inv.matr[j][k];
+					inv.matr[i][k] = cos * rem1 + sin * rem2;
+					inv.matr[j][k] = -sin * rem1 + cos * rem2;
+				}
+			}
+		}
+		return inv;
+	}
+	Matrix& Get_Inverse(Matrix& inv) {
+		inv = StraightWay_Metod_Vracsheniy(inv);
+		int i, j, k;
+		long double coef;
+		double e = 0.0000001;
+		for (k = n - 1; k > 0; k--)
+		{
+			for (i = k - 1; i >= 0; i--)
+			{
+				coef = matr[i][k] / matr[k][k];
+				for (j = n - 1; j >= 0; j--) {
+					matr[i][j] -= matr[k][j] * coef;
+					inv.matr[i][j] -= inv.matr[k][j] * coef;
+				}
+
+			}
+
+
+		}
+		for (k = 0; k < n; k++)
+			for (j = 0; j < n; j++) {
+				inv.matr[k][j] /= matr[k][k];
+			}
+
+		return inv;
+	}
+	double Find_own_number(Matrix& X) {
+		static int i = n;
+		Matrix Xnext(n, 1);
+		long double lim_prev = 1;
+		long double lim_next = 1;
+		
+		int count = 0;
+		double e = 0.0000001;
+		do {
+			Xnext = X;
+			Xnext.Normalize_vekt();
+			Xnext = *this * Xnext;
+			lim_prev = X.Norma_Vect_2();
+			lim_next = Xnext.Norma_Vect_2();
+			X = Xnext;
+		} while (fabs(lim_next - lim_prev) > e);
+		X.Normalize_vekt();
+		fout << "–°–æ–±—Å—Ç–≤–µ–Ω–Ω—ã–π –≤–µ–∫—Ç–æ—Ä –¥–ª—è" << i << "-–æ–≥–æ —Å–æ–±—Å—Ç–≤–µ–Ω–Ω–æ–≥–æ —á–∏—Å–ª–∞:" << endl;
+		Xnext.PrintMatr();
+		fout << endl << "–°–æ–±—Å—Ç–≤–µ–Ω–Ω–æ–µ —á–∏—Å–ª–æ " << i << ":" << lim_next << endl;
+		i--;
+		return lim_next;
+	}
 
 };
-
 
 int main() {
 	int N;
@@ -265,12 +398,12 @@ int main() {
 	B.SetElem();
 
 	Matrix Rem(N, 1);
-	p = (1 - sqrt(L1 / L2)) / (1 + sqrt(L1 / L2));//‚˚˜ËÒÎÂÌËÂ ‰ÎËÌ˚ ˆËÍÎ‡ ËÚÂ‡ˆËÈ
+	p = (1 - sqrt(L1 / L2)) / (1 + sqrt(L1 / L2));//–í—ã—á–∏—Å–ª–µ–Ω–∏–µ –∫–æ–ª–∏—á–µ—Å—Ç–≤–∞ –∏—Ç–µ—Ä–∞—Ü–∏–π
 	k = log(2 / e) / log(1 / p);
 	k = abs(k) + 1;
 	fout << k;
 
-	int nk = abs(log(k) / log(2));//ÌÓ‚˚È ‡ÁÏÂ Ï‡ÒÒË‚‡ ‰Îˇ ‡·ÓÚ˚ Ò ÓÔÚËÏ‡Î¸ÌÓÈ ÔÓÒÎÂ‰Ó‚‡ÚÂÎ¸ÌÓÒÚ¸˛
+	int nk = abs(log(k) / log(2));//–ù–æ–≤—ã–π —Ä–∞–∑–º–µ—Ä –º–∞—Å—Å–∏–≤–∞ –¥–ª—è —Ä–∞–±–æ—Ç—ã —Å –æ–ø—Ç.–ø–∞—Ä–∞–º.
 	k = nk;
 	nk = 1;
 	for (int i = 0; i <= k; i++) {
@@ -279,7 +412,7 @@ int main() {
 	fout << endl << nk << endl;
 
 
-	int* NK = new int[nk];//Ï‡ÒÒË‚ ÌÓÏÂÓ‚ Ô‡‡ÏÂÚÓ‚
+	int* NK = new int[nk];//–ù–æ–º–µ—Ä–∞ –ø–∞—Ä–∞–º–µ—Ç—Ä–æ–≤
 	for (int i = 0; i < nk; i++) NK[i] = i;
 	int* a = new int[nk];
 	int m = 0; int s = 1;
@@ -300,7 +433,7 @@ int main() {
 	}
 	delete(a);
 
-	double* T = new double[nk + 1];//Ï‡ÒÒË‚ Ô‡‡ÏÂÚÓ‚
+	double* T = new double[nk + 1];//–ú–∞—Å—Å–∏–≤ –ø–∞—Ä–∞–º–µ—Ç—Ä–æ–≤
 	for (int i = 1; i < nk + 1; i++) {
 		T[i] = 2 / ((L2 + L1) + (L2 - L1) * fabs(cos((2 * i - 1) * PI / (2 * k))));
 	}
