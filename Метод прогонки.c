@@ -18,7 +18,7 @@ void Straight_way(int N, double* A, double* B, double* C, double* d, double* Ac,
 	Bc[N-1] = (d[N-1] - A[N-1] * Bc[N - 2]) / Cc[N-1];
 }
 
-void Opposit_way(int N, double *X, /*double* d,*/ double* Ac, double* Bc) {
+void Opposit_way(int N, double *X, double* Ac, double* Bc) {
 	int i;
 	X[N - 1] = Bc[N - 1];
 	for (i = N - 2; i >= 0; i--) {
@@ -28,17 +28,17 @@ void Opposit_way(int N, double *X, /*double* d,*/ double* Ac, double* Bc) {
 
 int Chek_Matrix_Predominance_Condition(int N, double* A, double* B, double* C) {
 	if(fabs(B[0]) < fabs(C[0])) {
-		printf("Ðåøåíèå íå âîçìîæíî ïîëó÷èòü ìåòîäîì ïðîãîíêè: íå âûïîëíÿåòñÿ óñëîâèå äèàãîíàëüíîãî ïðåîáëàäàíÿ.");
+		printf("Ð ÐµÑˆÐµÐ½Ð¸Ðµ Ð½ÐµÐ²Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ð¾ Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ Ð¼ÐµÑ‚Ð¾Ð´Ð¾Ð¼ Ð¿Ñ€Ð¾Ð³Ð¾Ð½ÐºÐ¸. ÐÐµ Ð²Ñ‹Ð¿Ð¾Ð»Ð½ÑÐµÑ‚ÑÑ ÑƒÑÐ»Ð¾Ð²Ð¸Ðµ Ð´Ð¸Ð°Ð³Ð¾Ð½Ð°Ð»ÑŒÐ½Ð¾Ð³Ð¾ Ð¿Ñ€ÐµÐ¾Ð±Ð»Ð°Ð´Ð°Ð½Ð¸Ñ.");
 		return -1;
 	}
 	for (int i = 1; i < N-1; i++) {
 		if (fabs(B[i]) < fabs(C[i]) + fabs(A[i]) || fabs(B[i]) <= fabs(A[i])) {
-			printf("Ðåøåíèå íå âîçìîæíî ïîëó÷èòü ìåòîäîì ïðîãîíêè: íå âûïîëíÿåòñÿ óñëîâèå äèàãîíàëüíîãî ïðåîáëàäàíÿ.");
+			printf("Ð ÐµÑˆÐµÐ½Ð¸Ðµ Ð½ÐµÐ²Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ð¾ Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ Ð¼ÐµÑ‚Ð¾Ð´Ð¾Ð¼ Ð¿Ñ€Ð¾Ð³Ð¾Ð½ÐºÐ¸. ÐÐµ Ð²Ñ‹Ð¿Ð¾Ð»Ð½ÑÐµÑ‚ÑÑ ÑƒÑÐ»Ð¾Ð²Ð¸Ðµ Ð´Ð¸Ð°Ð³Ð¾Ð½Ð°Ð»ÑŒÐ½Ð¾Ð³Ð¾ Ð¿Ñ€ÐµÐ¾Ð±Ð»Ð°Ð´Ð°Ð½Ð¸Ñ.");
 			return -1;
 		}
 	}
 	if (fabs(B[N-1]) < fabs(A[N-1])) {
-		printf("Ðåøåíèå íå âîçìîæíî ïîëó÷èòü ìåòîäîì ïðîãîíêè: íå âûïîëíÿåòñÿ óñëîâèå äèàãîíàëüíîãî ïðåîáëàäàíÿ.");
+		printf("Ð ÐµÑˆÐµÐ½Ð¸Ðµ Ð½ÐµÐ²Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ð¾ Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ Ð¼ÐµÑ‚Ð¾Ð´Ð¾Ð¼ Ð¿Ñ€Ð¾Ð³Ð¾Ð½ÐºÐ¸. ÐÐµ Ð²Ñ‹Ð¿Ð¾Ð»Ð½ÑÐµÑ‚ÑÑ ÑƒÑÐ»Ð¾Ð²Ð¸Ðµ Ð´Ð¸Ð°Ð³Ð¾Ð½Ð°Ð»ÑŒÐ½Ð¾Ð³Ð¾ Ð¿Ñ€ÐµÐ¾Ð±Ð»Ð°Ð´Ð°Ð½Ð¸Ñ.");
 		return -1;
 	}
 	return 1;
@@ -104,9 +104,9 @@ int main()
 	freopen("output.txt", "w", stdout);
 	scanf("%d", &N);
 
-	A = (double*)calloc(N, sizeof(double)); // Íèæíÿÿ äèàã.
-	B = (double*)calloc(N, sizeof(double)); // Ãëàâíàÿ
-	C = (double*)calloc(N, sizeof(double)); // Âåðõíÿ
+	A = (double*)calloc(N, sizeof(double)); // ÐÐ¸Ð¶Ð½ÑÑ Ð´Ð¸Ð°Ð³.
+	B = (double*)calloc(N, sizeof(double)); // Ð“Ð»Ð°Ð²Ð½Ð°Ñ
+	C = (double*)calloc(N, sizeof(double)); // Ð’ÐµÑ€Ð½ÑÑ
 	Acoef = (double*)calloc(N, sizeof(double));
 	Bcoef = (double*)calloc(N, sizeof(double));
 	Ccoef = (double*)calloc(N, sizeof(double));
@@ -123,9 +123,9 @@ int main()
 
 	ch_d = chek_d(d, N, A, B, C);
 	printf("\ndet=%Lf\n", det = Det(N, A, B, C));
-	if (det == 0 && ch_d == -1) printf("Ïóñòîå ìíîæåñòâî ðåøåíèé. Îáðàòíîé ìàòðèöû íå ñóùåñòâóåò.");
+	if (det == 0 && ch_d == -1) printf("ÐŸÑƒÑÑ‚Ð¾Ðµ Ð¼Ð½Ð¾Ð¶ÐµÑÑ‚Ð²Ð¾ Ñ€ÐµÑˆÐµÐ½Ð¸Ð¹. ÐžÐ±Ñ€Ð°Ñ‚Ð½Ð¾Ð¹ Ð¼Ð°Ñ‚Ñ€Ð¸Ñ†Ñ‹ Ð½Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚.");
 	else if (det == 0 && ch_d == 0)
-		printf("Áåñêîíå÷íîå ìíîæåñòâî ðåøåíèé. Îáðàòíîé ìàòðèöû íå ñóùåñòâóåò. ");
+		printf("Ð‘ÐµÑÐºÐ¾Ð½ÐµÑ‡Ð½Ð¾Ðµ Ð¼Ð½Ð¾Ð¶ÐµÑÑ‚Ð²Ð¾ Ñ€ÐµÑˆÐµÐ½Ð¸Ð¹. ÐžÐ±Ñ€Ð°Ñ‚Ð½Ð¾Ð¹ Ð¼Ð°Ñ‚Ñ€Ð¸Ñ†Ñ‹ Ð½Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚.");
 	else {
 
 		true = Chek_Matrix_Predominance_Condition(N, A, B, C);
@@ -133,13 +133,13 @@ int main()
 
 		Straight_way(N, A, B, C, d, Acoef, Bcoef, Ccoef);
 		X = (double*)calloc(N, sizeof(double));
-		Opposit_way(N, X, /*d,*/ Acoef, Bcoef);
-		printf("\nÐåøåíèå:(");
+		Opposit_way(N, X, Acoef, Bcoef);
+		printf("\nÐ ÐµÑˆÐµÐ½Ð¸Ðµ:(");
 		for (i = 0; i < N - 1; i++)
 			printf("%.6lf, ", X[i]);
 		printf("%.6lf)", X[N - 1]);
 		free(X);
-		printf("\n\nÎáðàòíàÿ ìàòðèöà:");
+		printf("\n\nÐžÐ±Ñ€Ð°Ñ‚Ð½Ð°Ñ Ð¼Ð°Ñ‚Ñ€Ð¸Ñ†Ð°:");
 		Inverse(N, A, B, C);
 	}
 
